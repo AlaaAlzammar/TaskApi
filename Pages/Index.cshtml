@@ -1,0 +1,35 @@
+﻿@page
+@using System.Security.Claims
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+@if(User.Identity.IsAuthenticated)
+{
+    <div class="row">
+        <h3>user Claims</h3>
+        @foreach (var claim in User.Claims.Select(c => new { c.Type, c.Value }).ToList())
+        {
+        <div>
+            @claim.Type : @claim.Value
+        </div>
+        }
+
+        <h3>user Roles</h3>
+    
+        @foreach (var role in User.FindAll(ClaimTypes.Role).ToList())
+        {
+            <div>
+                @role.Type : @role.Value
+            </div>
+        }
+    </div>
+}
+
